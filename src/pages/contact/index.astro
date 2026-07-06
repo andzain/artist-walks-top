@@ -1,0 +1,62 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Section from "@components/ui/Section.astro";
+import Heading from "@components/ui/Heading.astro";
+import Button from "@components/ui/Button.astro";
+---
+
+<BaseLayout
+  title="Contact | ArtistWalks"
+  description="Get in touch to book private walking experiences in Yerevan."
+>
+  <!-- HERO -->
+  <Section class="max-w-3xl py-20 text-center">
+    <p class="text-sm uppercase tracking-[0.25em] text-stone-500">CONTACT</p>
+
+    <Heading level={1} className="mt-4"> Let’s walk the city together </Heading>
+
+    <p class="mt-6 text-lg leading-8 text-stone-600">
+      For private tours, collaborations, or questions about experiences in
+      Yerevan, feel free to reach out.
+    </p>
+  </Section>
+
+  <!-- CONTACT INFO -->
+  <Section class="max-w-2xl py-10 text-center">
+    <div class="space-y-6 text-lg text-stone-700">
+      <p>
+        Email:
+        <a
+          href="mailto:info@artist-walks.top"
+          class="underline hover:no-underline"
+        >
+          info@artist-walks.top
+        </a>
+      </p>
+
+      <p>
+        Instagram:
+        <a
+          href="https://instagram.com/artist__walks"
+          class="underline hover:no-underline"
+        >
+          @artistwalks
+        </a>
+      </p>
+    </div>
+  </Section>
+
+  <!-- CTA -->
+  <Section class="max-w-4xl py-20 text-center">
+    <Heading level={2} className=""> Ready to explore Yerevan? </Heading>
+
+    <p class="mt-6 text-lg text-stone-600">
+      Join a curated walking experience and discover the city through
+      architecture, history, and everyday life.
+    </p>
+
+    <div class="mt-10">
+      <Button href="/experiences"> View Experiences </Button>
+    </div>
+  </Section>
+</BaseLayout>

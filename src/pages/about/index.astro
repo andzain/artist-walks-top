@@ -1,0 +1,167 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Section from "@components/ui/Section.astro";
+import Heading from "@components/ui/Heading.astro";
+import Button from "@components/ui/Button.astro";
+---
+
+<BaseLayout
+  title="About | ArtistWalks"
+  description="Artist-led walking experiences in Yerevan exploring modernism, public space and urban history."
+>
+  <!-- HERO -->
+  <Section class="max-w-4xl py-20">
+    <p class="text-sm uppercase tracking-[0.25em] text-stone-500">ABOUT</p>
+
+    <Heading level={1} class="mt-4">
+      Yerevan through the eyes of an artist
+    </Heading>
+
+    <p class="mt-8 text-lg leading-8 text-stone-700">
+      I am a contemporary artist from Yerevan with over 30 years of experience
+      as a curator, artist, and theorist. My work focuses on public space and
+      modernism, and I have had the opportunity to present it internationally,
+      including at the Venice Biennale. My work has also been exhibited in
+      leading institutions such as the Contemporary Art Museum in Turin, Italy.
+    </p>
+
+    <p class="mt-6 text-lg leading-8 text-stone-700">
+      Yerevan is not just my home; it is a place I am deeply connected to and
+      continuously explore — a city I keep returning to through research,
+      observation, and artistic practice.
+    </p>
+
+    <p class="mt-6 text-lg leading-8 text-stone-700">
+      In my tours, I aim to share a unique perspective on the city — one that
+      connects its historical layers with its contemporary identity. Whether you
+      are an artist, architecture enthusiast, or curious traveler, I guide you
+      through hidden gems, cultural landmarks, and everyday urban life.
+    </p>
+
+    <p class="mt-6 text-lg leading-8 text-stone-700 font-medium">
+      Let’s rediscover the city together.
+    </p>
+  </Section>
+
+  <!-- IMAGE -->
+  <Section class="max-w-6xl py-10">
+    <img
+      src="public//images/portrait.jpg"
+      alt="ArtistWalks portrait"
+      class="w-full rounded-2xl object-cover"
+    />
+  </Section>
+
+  <!-- PHILOSOPHY -->
+  <Section class="max-w-5xl py-16">
+    <Heading level={2} class="mb-10"> What shapes these walks </Heading>
+
+    <div class="grid gap-8 md:grid-cols-3">
+      <div>
+        <h3 class="text-lg font-semibold">Public Space</h3>
+        <p class="mt-3 text-stone-600">
+          Architecture and urban planning reveal how cities think, remember, and
+          evolve.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-lg font-semibold">Modernism</h3>
+        <p class="mt-3 text-stone-600">
+          Soviet and post-Soviet architecture form a layered visual and
+          ideological landscape.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="text-lg font-semibold">Observation</h3>
+        <p class="mt-3 text-stone-600">
+          Every walk is an act of reading the city through details, stories, and
+          lived experience.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- TESTIMONIALS -->
+  <Section class="max-w-5xl py-16">
+    <Heading level={2} class="mb-10"> What visitors say </Heading>
+
+    <div class="space-y-10">
+      <blockquote class="border-l-2 border-stone-300 pl-6">
+        <p class="text-stone-700">
+          “Vagram showed us Yerevan from a completely new perspective and
+          answered all our questions about the city and the country. Thank you
+          very much!”
+        </p>
+        <footer class="mt-3 text-sm text-stone-500">
+          — Daria, March 17, 2026
+        </footer>
+      </blockquote>
+
+      <blockquote class="border-l-2 border-stone-300 pl-6">
+        <p class="text-stone-700">
+          “Thank you for the time and immersion into Yerevan’s architecture. We
+          saw the city through the eyes of a passionate person.”
+        </p>
+        <footer class="mt-3 text-sm text-stone-500">
+          — Tatyana, March 4, 2026
+        </footer>
+      </blockquote>
+
+      <blockquote class="border-l-2 border-stone-300 pl-6">
+        <p class="text-stone-700">
+          “One of the most impressive tours I’ve ever had. It felt like reading
+          an entire book about the city.”
+        </p>
+        <footer class="mt-3 text-sm text-stone-500">
+          — Zakharian, February 16, 2026
+        </footer>
+      </blockquote>
+
+      <blockquote class="border-l-2 border-stone-300 pl-6">
+        <p class="text-stone-700">
+          “Excellent knowledge of the material. Very polite and intelligent
+          guide.”
+        </p>
+        <footer class="mt-3 text-sm text-stone-500">
+          — Laura, February 6, 2026
+        </footer>
+      </blockquote>
+
+      <blockquote class="border-l-2 border-stone-300 pl-6">
+        <p class="text-stone-700">
+          “One of the best tours I’ve ever had. Very interesting and
+          educational.”
+        </p>
+        <footer class="mt-3 text-sm text-stone-500">
+          — Olga, January 22, 2026
+        </footer>
+      </blockquote>
+
+      <blockquote class="border-l-2 border-stone-300 pl-6">
+        <p class="text-stone-700">
+          “A truly professional and insightful guide. Highly recommended for
+          anyone interested in architecture and history.”
+        </p>
+        <footer class="mt-3 text-sm text-stone-500">
+          — Galina, January 22, 2026
+        </footer>
+      </blockquote>
+    </div>
+  </Section>
+
+  <!-- CTA -->
+  <Section class="max-w-4xl py-20 text-center">
+    <Heading level={2}> Explore Yerevan differently </Heading>
+
+    <p class="mt-6 text-lg text-stone-600">
+      Join an ArtistWalks experience and see the city through architecture,
+      memory, and everyday life.
+    </p>
+
+    <div class="mt-10">
+      <Button href="/experiences"> View Experiences </Button>
+    </div>
+  </Section>
+</BaseLayout>

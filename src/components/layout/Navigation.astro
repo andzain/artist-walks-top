@@ -1,0 +1,15 @@
+---
+import { navigation } from "@/config/navigation";
+---
+
+<nav>
+  <ul class="flex gap-8">
+    {
+      navigation.map((item) => (
+        <li>
+          <a href={item.href}>{item.title}</a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

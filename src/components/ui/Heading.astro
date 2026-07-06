@@ -1,0 +1,20 @@
+---
+interface Props {
+  level?: 1 | 2 | 3 | 4;
+}
+
+const { level = 1 } = Astro.props;
+
+const Tag = `h${level}` as keyof HTMLElementTagNameMap;
+
+const classes = {
+  1: "text-5xl font-serif leading-tight",
+  2: "text-4xl font-serif",
+  3: "text-2xl font-semibold",
+  4: "text-xl font-semibold",
+};
+---
+
+<Tag class={classes[level]}>
+  <slot />
+</Tag>

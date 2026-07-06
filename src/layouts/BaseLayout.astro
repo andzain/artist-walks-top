@@ -1,0 +1,127 @@
+---
+import "@styles/global.css";
+
+import Header from "@components/layout/Header.astro";
+import Navigation from "@components/layout/Navigation.astro";
+import Footer from "@components/layout/Footer.astro";
+import Button from "@components/ui/Button.astro";
+import { site } from "@/config/site";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noIndex?: boolean;
+}
+
+const {
+  title = "ArtistWalks | Discover Yerevan Through Art & Architecture",
+  description = "Artist-led walking experiences exploring architecture, Soviet modernism, art, and everyday life in Yerevan.",
+  image = "/images/og-default.webp",
+  noIndex = false,
+} = Astro.props;
+
+const siteUrl = "https://artist-walks.top";
+
+const canonical = new URL(Astro.url.pathname, siteUrl).toString();
+
+const pageTitle =
+  title === "ArtistWalks | Discover Yerevan Through Art & Architecture"
+    ? title
+    : `${title} | ArtistWalks`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{pageTitle}</title>
+
+    <meta name="description" content={description} />
+
+    <link rel="canonical" href={canonical} />
+
+    <meta
+      name="robots"
+      content={noIndex ? "noindex,nofollow" : "index,follow"}
+    />
+
+    <meta property="og:type" content="website" />
+
+    <meta property="og:title" content={pageTitle} />
+
+    <meta property="og:description" content={description} />
+
+    <meta property="og:image" content={image} />
+
+    <meta property="og:url" content={canonical} />
+
+    <meta property="og:site_name" content="ArtistWalks" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta name="twitter:title" content={pageTitle} />
+
+    <meta name="twitter:description" content={description} />
+
+    <meta name="twitter:image" content={image} />
+
+    <link rel="icon" href="/favicon.svg" />
+  </head>
+
+  <body class="bg-stone-50 text-stone-900 antialiased">
+    <Header>
+      <Navigation />
+      <Button href="/book" size="sm">Book</Button>
+    </Header>
+
+    <main>
+      <slot />
+    </main>
+
+    <Footer />
+
+    <script define:vars={{ calUsername: site.calUsername }}>
+      (function (C, A, L) {
+        let p = function (a, ar) {
+          a.q.push(ar);
+        };
+        let d = C.document;
+        C.Cal =
+          C.Cal ||
+          function () {
+            let cal = C.Cal;
+            let ar = arguments;
+            if (!cal.loaded) {
+              cal.ns = {};
+              cal.q = cal.q || [];
+              d.head.appendChild(d.createElement("script")).src = A;
+              cal.loaded = true;
+            }
+            if (ar[0] === L) {
+              const api = function () {
+                p(api, arguments);
+              };
+              const namespace = ar[1];
+              api.q = api.q || [];
+              if (typeof namespace === "string") {
+                cal.ns[namespace] = cal.ns[namespace] || api;
+                p(cal.ns[namespace], ar);
+                p(cal, ["initNamespace", namespace]);
+              } else {
+                p(cal, ar);
+              }
+              return;
+            }
+            p(cal, ar);
+          };
+      })(window, "https://app.cal.com/embed/embed.js", "init");
+
+      Cal("init", { origin: "https://cal.com" });
+      Cal("ui", { theme: "light" });
+    </script>
+  </body>
+</html>

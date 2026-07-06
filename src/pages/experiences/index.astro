@@ -1,0 +1,47 @@
+---
+import { getCollection } from "astro:content";
+
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Section from "@components/ui/Section.astro";
+import ExperienceCard from "@components/experience/ExperienceCard.astro";
+
+const experiences = await getCollection("experiences");
+
+// Sort experiences by the "order" field
+experiences.sort((a, b) => (a.data.order as number) - (b.data.order as number));
+---
+
+<BaseLayout
+  title="Experiences"
+  description="Explore artist-led walking experiences in Yerevan."
+>
+  <Section>
+    <h1 class="mb-12 text-5xl font-serif">
+      Experiences
+    </h1>
+
+    {
+      experiences.length === 0 ? (
+        <p class="text-stone-500">
+          No experiences found.
+        </p>
+      ) : (
+        <div class="grid gap-10 md:grid-cols-2">
+          {
+            experiences.map((experience: (typeof experiences)[0]) => (
+              <ExperienceCard
+                title={experience.data.title}
+                description={experience.data.description}
+                category={experience.data.category}
+                duration={experience.data.duration}
+                price={experience.data.pricing.group}
+                hero={experience.data.hero}
+                slug={experience.id}
+              />
+            ))
+          }
+        </div>
+      )
+    }
+  </Section>
+</BaseLayout>

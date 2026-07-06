@@ -1,0 +1,103 @@
+---
+import { getCollection } from "astro:content";
+
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Section from "@components/ui/Section.astro";
+import Heading from "@components/ui/Heading.astro";
+import Button from "@components/ui/Button.astro";
+import { site } from "@/config/site";
+
+const experiences = (await getCollection("experiences")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout
+  title="Book"
+  description="Book an artist-led walking experience in Yerevan."
+>
+  <Section>
+    <Heading level={1}>Book a Walk</Heading>
+
+    <p class="mt-6 max-w-2xl text-lg text-stone-600">
+      Already know which walk you want? Jump straight to booking it below, or
+      browse everything on the calendar.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+      {
+        experiences.map((experience) => (
+          <Button
+            calLink={`${site.calUsername}/${experience.data.calEvent}`}
+            calNamespace={experience.id}
+            variant="secondary"
+            size="sm"
+          >
+            {experience.data.title}
+          </Button>
+        ))
+      }
+    </div>
+
+    <div class="mt-12 grid gap-10 lg:grid-cols-3">
+      <aside class="lg:col-span-1">
+        <div class="rounded-2xl border border-stone-200 bg-white p-6">
+          <h2 class="text-lg font-semibold">Good to know</h2>
+
+          <dl class="mt-6 space-y-5 text-sm">
+            <div>
+              <dt class="font-medium text-stone-900">Duration</dt>
+              <dd class="mt-1 text-stone-600">Most walks run 2–3 hours</dd>
+            </div>
+
+            <div>
+              <dt class="font-medium text-stone-900">Group size</dt>
+              <dd class="mt-1 text-stone-600">
+                Small groups, up to 8 people. Private walks available on
+                request.
+              </dd>
+            </div>
+
+            <div>
+              <dt class="font-medium text-stone-900">Cancellation policy</dt>
+              <dd class="mt-1 text-stone-600">
+                Free cancellation up to 24 hours before your walk.
+              </dd>
+            </div>
+          </dl>
+
+          <p class="mt-6 text-sm text-stone-500">
+            Questions first? <a href="/contact" class="underline"
+              >Get in touch</a
+            >.
+          </p>
+        </div>
+      </aside>
+
+      <div class="lg:col-span-2">
+        <div id="cal-booking" style="width:100%;height:700px;overflow:scroll">
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<script
+  define:vars={{
+    calUsername: site.calUsername,
+    experienceIds: experiences.map((e) => e.id),
+  }}
+>
+  // Give the inline calendar its own namespace so it doesn't collide with the popup buttons
+  Cal("init", "book-inline");
+  Cal.ns["book-inline"]("inline", {
+    elementOrSelector: "#cal-booking",
+    calLink: calUsername,
+    config: { theme: "light" },
+  });
+
+  // Give each quick-link popup button its own namespace too
+  experienceIds.forEach((id) => {
+    Cal("init", id);
+  });
+</script>

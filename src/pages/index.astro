@@ -1,0 +1,46 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Section from "@components/ui/Section.astro";
+import Heading from "@components/ui/Heading.astro";
+import Button from "@components/ui/Button.astro";
+---
+
+<BaseLayout
+  title="ArtistWalks"
+  description="Artist-led walking experiences exploring architecture, art and everyday life in Yerevan."
+>
+  <Section>
+    <div class="grid items-center gap-12 lg:grid-cols-2">
+      <!-- Left Column -->
+      <div>
+        <p class="mb-4 text-sm uppercase tracking-[0.2em] text-stone-500">
+          Artist-led Walking Experiences
+        </p>
+
+        <Heading level={1}>
+          Discover Yerevan through Art, Architecture and Everyday Life.
+        </Heading>
+
+        <p class="mt-6 max-w-xl text-lg leading-8 text-stone-600">
+          Curated walking experiences exploring Soviet modernism, architecture,
+          artists' studios and the hidden stories of Armenia's capital.
+        </p>
+
+        <div class="mt-8 flex gap-4">
+          <Button href="/experiences"> Explore Experiences </Button>
+
+          <Button href="/about" variant="secondary"> About ArtistWalks </Button>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div>
+        <img
+          src="/images/home/hero.webp"
+          alt="Modern architecture in Yerevan"
+          class="rounded-2xl shadow-lg"
+        />
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
