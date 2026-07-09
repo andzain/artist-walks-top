@@ -1,15 +1,24 @@
 ---
 import Container from "./Container.astro";
+import Navigation from "./Navigation.astro";
+import MobileMenu from "./MobileMenu.svelte";
+import Button from "../ui/Button.astro";
 ---
 
 <header class="sticky top-0 z-50 border-b bg-white/80 backdrop-blur">
   <Container>
     <div class="flex h-16 items-center justify-between">
+      <!-- Logo -->
       <a href="/" class="text-xl font-semibold tracking-wide"> ArtistWalks </a>
 
-      <div class="flex items-center gap-8">
-        <slot />
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center gap-8">
+        <Navigation />
+        <Button href="/book" size="sm"> Book </Button>
       </div>
+
+      <!-- Mobile Navigation -->
+      <MobileMenu client:load />
     </div>
   </Container>
 </header>
