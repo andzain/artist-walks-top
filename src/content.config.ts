@@ -2,7 +2,11 @@ import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
 const experiences = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/experiences" }),
+  loader: glob({
+    pattern: "**/*.md",
+    base: "./src/content/experiences",
+  }),
+
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -33,6 +37,31 @@ const experiences = defineCollection({
   }),
 });
 
+const collectionsContent = defineCollection({
+  loader: glob({
+    pattern: "**/*.md",
+    base: "./src/content/collections",
+  }),
+
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+
+    hero: z.string(),
+
+    featured: z.boolean().default(false),
+
+    order: z.number().default(0),
+
+    relatedExperience: z.string(),
+
+    themes: z.array(z.string()),
+
+    gallery: z.array(z.string()).default([]),
+  }),
+});
+
 export const collections = {
   experiences,
+  collections: collectionsContent,
 };

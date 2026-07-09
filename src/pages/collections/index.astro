@@ -1,0 +1,71 @@
+---
+import { getCollection } from "astro:content";
+
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Section from "@components/ui/Section.astro";
+import Heading from "@components/ui/Heading.astro";
+
+const collections = (await getCollection("collections")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout
+  title="Collections"
+  description="Curated essays exploring architecture, public space, art and everyday life in Yerevan."
+>
+  <section class="bg-stone-100 py-24">
+    <div class="mx-auto max-w-4xl px-6 text-center">
+      <p class="text-sm uppercase tracking-[0.35em] text-stone-500">
+        Collections
+      </p>
+
+      <Heading level={1}> Explore Yerevan Through Curated Themes </Heading>
+
+      <p class="mx-auto mt-8 max-w-2xl text-lg text-stone-600">
+        These collections bring together architecture, public space, political
+        history and contemporary culture. Think of them as exhibition catalogues
+        that introduce ideas before you experience them on foot.
+      </p>
+    </div>
+  </section>
+
+  <Section>
+    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+      {
+        collections.map((collection) => (
+          <a
+            href={`/collections/${collection.id}`}
+            class="group overflow-hidden rounded-2xl border border-stone-200 bg-white transition hover:-translate-y-1 hover:shadow-xl"
+          >
+            <img
+              src={collection.data.hero}
+              alt={collection.data.title}
+              class="aspect-[4/3] w-full object-cover transition duration-500 group-hover:scale-105"
+            />
+
+            <div class="p-6">
+              <h2 class="text-2xl font-light group-hover:text-stone-900">
+                {collection.data.title}
+              </h2>
+
+              <p class="mt-4 text-sm leading-7 text-stone-600">
+                {collection.data.description}
+              </p>
+
+              <div class="mt-6 flex flex-wrap gap-2">
+                {collection.data.themes.slice(0, 3).map((theme) => (
+                  <span class="rounded-full bg-stone-100 px-3 py-1 text-xs">
+                    {theme}
+                  </span>
+                ))}
+              </div>
+
+              <p class="mt-8 text-sm font-medium">Explore Collection →</p>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </Section>
+</BaseLayout>

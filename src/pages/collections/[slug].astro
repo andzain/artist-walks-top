@@ -1,0 +1,109 @@
+---
+import { getCollection, render } from "astro:content";
+
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Section from "@components/ui/Section.astro";
+import Heading from "@components/ui/Heading.astro";
+import Button from "@components/ui/Button.astro";
+
+export async function getStaticPaths() {
+  const collections = await getCollection("collections");
+
+  return collections.map((collection) => ({
+    params: { slug: collection.id },
+    props: { collection },
+  }));
+}
+
+const { collection } = Astro.props;
+
+const { Content } = await render(collection);
+
+const { title, description, hero, themes, gallery, relatedExperience } =
+  collection.data;
+---
+
+<BaseLayout title={title} description={description} image={hero}>
+  <section class="relative h-[55vh] overflow-hidden">
+    <img
+      src={hero}
+      alt={title}
+      class="absolute inset-0 h-full w-full object-cover"
+    />
+
+    <div class="absolute inset-0 bg-black/45"></div>
+
+    <div class="relative flex h-full items-end">
+      <div class="mx-auto w-full max-w-6xl px-6 pb-16 text-white">
+        <p class="mb-3 text-sm uppercase tracking-[0.35em] opacity-80">
+          Collection
+        </p>
+
+        <h1 class="max-w-4xl text-5xl font-light md:text-7xl">
+          {title}
+        </h1>
+
+        <p class="mt-6 max-w-2xl text-lg opacity-90">
+          {description}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <Section>
+    <div class="mx-auto max-w-3xl">
+      <Heading level={2}> Curator's Note </Heading>
+
+      <div class="prose prose-stone mt-8 max-w-none">
+        <Content />
+      </div>
+    </div>
+  </Section>
+
+  {
+    themes.length > 0 && (
+      <Section>
+        <Heading level={2}>Key Themes</Heading>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          {themes.map((theme) => (
+            <span class="rounded-full border border-stone-300 px-5 py-2 text-sm">
+              {theme}
+            </span>
+          ))}
+        </div>
+      </Section>
+    )
+  }
+
+  {
+    gallery.length > 0 && (
+      <Section>
+        <Heading level={2}>Gallery</Heading>
+
+        <div class="mt-10 grid gap-6 md:grid-cols-2">
+          {gallery.map((image) => (
+            <img src={image} alt={title} class="rounded-2xl object-cover" />
+          ))}
+        </div>
+      </Section>
+    )
+  }
+
+  <Section>
+    <div class="rounded-3xl bg-stone-100 p-10">
+      <h2 class="text-3xl font-light">Experience this Collection</h2>
+
+      <p class="mt-4 max-w-2xl text-stone-600">
+        Explore these places through an artist-led walking experience,
+        connecting architecture, public space, history and contemporary life.
+      </p>
+
+      <div class="mt-8">
+        <Button href={`/experiences/${relatedExperience}`}>
+          Book the Walk
+        </Button>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

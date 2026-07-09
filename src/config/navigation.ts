@@ -4,8 +4,8 @@ export const navigation = [
     href: "/experiences",
   },
   {
-    title: "Journal",
-    href: "/journal",
+    title: "Collections",
+    href: "/collections",
   },
   {
     title: "About",
