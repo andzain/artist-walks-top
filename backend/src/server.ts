@@ -1,6 +1,6 @@
 import Fastify from "fastify";
-
 import { walkRoutes } from "./routes/walks";
+import { bookingRoutes } from "./routes/bookings";
 
 const app = Fastify({
   logger: true,
@@ -11,6 +11,7 @@ app.get("/health", async () => {
 });
 
 app.register(walkRoutes);
+app.register(bookingRoutes);
 
 const start = async () => {
   try {
