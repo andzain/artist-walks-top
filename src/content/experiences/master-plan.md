@@ -1,5 +1,6 @@
 ---
 title: "Master plan"
+experienceSlug: "master-plan"
 
 description: "Discover Yerevan's remarkable Soviet architecture through an artist's perspective."
 
@@ -30,7 +31,7 @@ gallery:
   - "/images/experiences/master-plan-1.webp"
   - "/images/experiences/master-plan-2.webp"
 
-order: 1
+order: 3
 
 tags:
   - Soviet Modernism

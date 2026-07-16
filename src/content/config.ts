@@ -3,6 +3,7 @@ import { defineCollection, z } from "astro:content";
 const experiences = defineCollection({
   schema: z.object({
     title: z.string(),
+    experienceSlug: z.string(),
     description: z.string(),
     category: z.string(),
     duration: z.string(),

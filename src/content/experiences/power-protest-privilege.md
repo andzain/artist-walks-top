@@ -1,5 +1,6 @@
 ---
 title: "power protest privilege"
+experienceSlug: "power-protest-privilege"
 
 description: "Every city tells a story of power. In Yerevan, these narratives of protest, authority, revolution, and wealth are etched into the very stones of its squares, avenues, and hidden corners. "
 category: "yerevan"
@@ -26,7 +27,7 @@ gallery:
   - "/images/experiences/power-protest-1.webp"
   - "/images/experiences/power-protest-2.webp"
 
-order: 1
+order: 2
 
 tags:
   - Test

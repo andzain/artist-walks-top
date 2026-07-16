@@ -1,5 +1,7 @@
 ---
 title: "Soviet Modernism"
+experienceSlug: "soviet-modernism"
+
 calLink: artistwalks/modernism
 
 description: "Discover Yerevan's remarkable Soviet architecture through an artist's perspective."

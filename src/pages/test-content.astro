@@ -1,0 +1,9 @@
+---
+import { getCollection } from "astro:content";
+
+const experiences = await getCollection("experiences");
+
+console.log(experiences.map((e) => e.id));
+---
+
+<h1>Check terminal</h1>

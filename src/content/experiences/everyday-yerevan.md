@@ -1,5 +1,6 @@
 ---
 title: "Everyday Yerevan"
+experienceSlug: "everyday-yerevan"
 
 description: "Experience the city's everyday rhythms through observation and conversation."
 

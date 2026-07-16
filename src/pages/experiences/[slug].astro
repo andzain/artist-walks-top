@@ -1,22 +1,25 @@
 ---
 import { getCollection, render } from "astro:content";
-import { site } from "@/config/site";
+
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Section from "@components/ui/Section.astro";
 import Heading from "@components/ui/Heading.astro";
 import Button from "@components/ui/Button.astro";
 
-export async function getStaticPaths() {
-  const experiences = await getCollection("experiences");
+import { site } from "@/config/site";
 
-  return experiences.map((experience) => ({
-    params: { slug: experience.id },
-    props: { experience },
-  }));
+const slug = Astro.params.slug!;
+
+const experiences = await getCollection("experiences");
+
+const experience = experiences.find((e) => e.id === slug);
+
+if (!experience) {
+  throw new Error(`Experience "${slug}" not found`);
 }
 
-const { experience } = Astro.props;
 const { Content } = await render(experience);
+
 const {
   title,
   description,
@@ -27,16 +30,30 @@ const {
   languages,
   difficulty,
   hero,
-  gallery,
+  gallery = [],
+  calEvent,
 } = experience.data;
 ---
 
 <BaseLayout title={title} description={description} image={hero}>
   <Section>
-    <p class="text-sm uppercase tracking-wide text-stone-500">{category}</p>
-    <Heading level={1}>{title}</Heading>
+    <p class="text-sm uppercase tracking-wide text-stone-500">
+      {category}
+    </p>
 
-    <img src={hero} alt={title} class="mt-8 w-full rounded-2xl object-cover" />
+    <Heading level={1}>
+      {title}
+    </Heading>
+
+    {
+      hero && (
+        <img
+          src={hero}
+          alt={title}
+          class="mt-8 w-full rounded-2xl object-cover"
+        />
+      )
+    }
 
     <div class="prose mt-10 max-w-2xl">
       <Content />
@@ -45,48 +62,51 @@ const {
     <dl class="mt-10 grid max-w-xl grid-cols-2 gap-6 text-sm">
       <div>
         <dt class="text-stone-500">Duration</dt>
-        <dd class="mt-1 font-medium">{duration}</dd>
+
+        <dd class="font-medium">
+          {duration}
+        </dd>
       </div>
+
       <div>
         <dt class="text-stone-500">Meeting point</dt>
-        <dd class="mt-1 font-medium">{meetingPoint}</dd>
+
+        <dd class="font-medium">
+          {meetingPoint}
+        </dd>
       </div>
+
       <div>
         <dt class="text-stone-500">Difficulty</dt>
-        <dd class="mt-1 font-medium">{difficulty}</dd>
+
+        <dd class="font-medium">
+          {difficulty}
+        </dd>
       </div>
+
       <div>
         <dt class="text-stone-500">Languages</dt>
-        <dd class="mt-1 font-medium">{languages.join(", ")}</dd>
-      </div>
-      <div>
-        <dt class="text-stone-500">Group price</dt>
-        <dd class="mt-1 font-medium">${pricing.group}</dd>
-      </div>
-      <div>
-        <dt class="text-stone-500">Private price</dt>
-        <dd class="mt-1 font-medium">${pricing.private}</dd>
+
+        <dd class="font-medium">
+          {languages.join(", ")}
+        </dd>
       </div>
     </dl>
 
     {
       gallery.length > 0 && (
-        <div class="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3">
-          {gallery.map((src: string) => (
-            <img
-              src={src}
-              alt={title}
-              class="aspect-square w-full rounded-xl object-cover"
-            />
+        <div class="mt-10 grid grid-cols-2 gap-4">
+          {gallery.map((image) => (
+            <img src={image} alt={title} class="rounded-xl" />
           ))}
         </div>
       )
     }
 
     <div class="mt-10">
-      <Button calLink={`${site.calUsername}/${experience.data.calEvent}`}
-        >Book This Experience</Button
-      >
+      <Button calLink={`${site.calUsername}/${calEvent}`}>
+        Book This Experience
+      </Button>
     </div>
   </Section>
 </BaseLayout>

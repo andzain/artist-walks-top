@@ -5,6 +5,7 @@ const experiences = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/experiences" }),
   schema: z.object({
     title: z.string(),
+    experienceSlug: z.string(),
     description: z.string(),
     category: z.string(),
     duration: z.string(),
