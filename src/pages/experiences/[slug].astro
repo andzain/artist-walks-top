@@ -1,17 +1,13 @@
 ---
 import { getCollection, render } from "astro:content";
-
+import { prisma } from "../../lib/prisma";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Section from "@components/ui/Section.astro";
 import Heading from "@components/ui/Heading.astro";
-import Button from "@components/ui/Button.astro";
-
-import { site } from "@/config/site";
+import BookingForm from "@components/BookingForm.svelte";
 
 const slug = Astro.params.slug!;
-
 const experiences = await getCollection("experiences");
-
 const experience = experiences.find((e) => e.id === slug);
 
 if (!experience) {
@@ -26,24 +22,36 @@ const {
   category,
   duration,
   meetingPoint,
-  pricing,
   languages,
   difficulty,
   hero,
   gallery = [],
-  calEvent,
+  experienceSlug,
 } = experience.data;
+
+const upcomingWalks = await prisma.walk.findMany({
+  where: {
+    experienceSlug,
+    startsAt: { gte: new Date() },
+  },
+  include: {
+    _count: { select: { bookings: true } },
+  },
+  orderBy: { startsAt: "asc" },
+});
+
+const walks = upcomingWalks.map((w) => ({
+  id: w.id,
+  startsAt: w.startsAt.toISOString(),
+  seatsRemaining: w.capacity - w._count.bookings,
+}));
 ---
 
 <BaseLayout title={title} description={description} image={hero}>
   <Section>
-    <p class="text-sm uppercase tracking-wide text-stone-500">
-      {category}
-    </p>
+    <p class="text-sm uppercase tracking-wide text-stone-500">{category}</p>
 
-    <Heading level={1}>
-      {title}
-    </Heading>
+    <Heading level={1}>{title}</Heading>
 
     {
       hero && (
@@ -62,34 +70,19 @@ const {
     <dl class="mt-10 grid max-w-xl grid-cols-2 gap-6 text-sm">
       <div>
         <dt class="text-stone-500">Duration</dt>
-
-        <dd class="font-medium">
-          {duration}
-        </dd>
+        <dd class="font-medium">{duration}</dd>
       </div>
-
       <div>
         <dt class="text-stone-500">Meeting point</dt>
-
-        <dd class="font-medium">
-          {meetingPoint}
-        </dd>
+        <dd class="font-medium">{meetingPoint}</dd>
       </div>
-
       <div>
         <dt class="text-stone-500">Difficulty</dt>
-
-        <dd class="font-medium">
-          {difficulty}
-        </dd>
+        <dd class="font-medium">{difficulty}</dd>
       </div>
-
       <div>
         <dt class="text-stone-500">Languages</dt>
-
-        <dd class="font-medium">
-          {languages.join(", ")}
-        </dd>
+        <dd class="font-medium">{languages.join(", ")}</dd>
       </div>
     </dl>
 
@@ -104,9 +97,12 @@ const {
     }
 
     <div class="mt-10">
-      <Button calLink={`${site.calUsername}/${calEvent}`}>
-        Book This Experience
-      </Button>
+      <BookingForm
+        client:load
+        walks={walks}
+        experienceTitle={title}
+        meetingPoint={meetingPoint}
+      />
     </div>
   </Section>
 </BaseLayout>

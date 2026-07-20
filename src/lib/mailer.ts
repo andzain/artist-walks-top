@@ -24,3 +24,29 @@ export async function notifyGuideOfBooking(data: {
     text: `${data.name} booked "${data.experienceSlug}" for ${data.startsAt.toLocaleString()}.\nEmail: ${data.email}\nPhone: ${data.phone}`,
   });
 }
+export async function confirmBookingToCustomer(data: {
+  name: string;
+  email: string;
+  experienceTitle: string;
+  startsAt: Date;
+  meetingPoint: string;
+}) {
+  await transporter.sendMail({
+    from: process.env.MAIL_FROM,
+    to: data.email,
+    subject: `Your booking is confirmed — ${data.experienceTitle}`,
+    text: `Hi ${data.name},
+
+Your booking is confirmed.
+
+Experience: ${data.experienceTitle}
+Date & time: ${data.startsAt.toLocaleString("en-GB", { dateStyle: "full", timeStyle: "short" })}
+Meeting point: ${data.meetingPoint}
+
+If you have any questions, reply to this email.
+
+See you soon,
+ArtistWalks
+`,
+  });
+}

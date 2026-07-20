@@ -20,7 +20,19 @@ model Booking {
   id        String   @id @default(cuid())
   name      String
   email     String
+  phone     String
   createdAt DateTime @default(now())
   walkId    String
   walk      Walk     @relation(fields: [walkId], references: [id], onDelete: Cascade)
+}
+
+model AvailabilityRule {
+  id             String    @id @default(cuid())
+  experienceSlug String
+  dayOfWeek      Int
+  time           String
+  capacity       Int
+  validFrom      DateTime
+  validTo        DateTime?
+  active         Boolean   @default(true)
 }

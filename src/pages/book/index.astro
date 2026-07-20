@@ -12,8 +12,10 @@ const experiences = (await getCollection("experiences")).sort(
 
 const upcomingWalks = await prisma.walk.findMany({
   where: { startsAt: { gte: new Date() } },
-  include: { bookings: true },
   orderBy: { startsAt: "asc" },
+  include: {
+    _count: { select: { bookings: true } },
+  },
 });
 
 const walksBySlug: Record<string, typeof upcomingWalks> = {};
@@ -51,6 +53,8 @@ for (const walk of upcomingWalks) {
                     seatsRemaining: w.capacity - w.bookings.length,
                   }),
                 )}
+                experienceTitle={experience.data.title}
+                meetingPoint={experience.data.meetingPoint}
               />
             </div>
           </article>

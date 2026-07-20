@@ -1,7 +1,7 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { prisma } from "../lib/prisma";
-import { notifyGuideOfBooking } from "../lib/mailer";
+import { notifyGuideOfBooking, confirmBookingToCustomer } from "../lib/mailer";
 
 export const server = {
   createBooking: defineAction({
@@ -11,27 +11,24 @@ export const server = {
       name: z.string().min(2),
       email: z.string().email(),
       phone: z.string().min(6),
+      experienceTitle: z.string(),
+      meetingPoint: z.string(),
     }),
     handler: async (input) => {
       const booking = await prisma.$transaction(async (tx) => {
-        const rows = await tx.$queryRaw<
-          {
-            id: string;
-            capacity: number;
-            experienceSlug: string;
-            startsAt: Date;
-          }[]
-        >`
-          SELECT id, capacity, "experienceSlug", "startsAt" FROM "Walk" WHERE id = ${input.walkId} FOR UPDATE
-        `;
-        const walk = rows[0];
+        const walk = await tx.walk.findUnique({
+          where: { id: input.walkId },
+        });
+
         if (!walk) throw new Error("This date no longer exists");
 
         const bookedCount = await tx.booking.count({
           where: { walkId: walk.id },
         });
-        if (bookedCount >= walk.capacity)
+
+        if (bookedCount >= walk.capacity) {
           throw new Error("This date is fully booked");
+        }
 
         const created = await tx.booking.create({
           data: {
@@ -54,7 +51,19 @@ export const server = {
           startsAt: booking.walk.startsAt,
         });
       } catch (err) {
-        console.error("Booking succeeded but email notification failed:", err);
+        console.error("Guide notification failed:", err);
+      }
+
+      try {
+        await confirmBookingToCustomer({
+          name: input.name,
+          email: input.email,
+          experienceTitle: input.experienceTitle,
+          startsAt: booking.walk.startsAt,
+          meetingPoint: input.meetingPoint,
+        });
+      } catch (err) {
+        console.error("Customer confirmation failed:", err);
       }
 
       return booking.created;
