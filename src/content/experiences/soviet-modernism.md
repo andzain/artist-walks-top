@@ -13,9 +13,9 @@ duration: "3 hours"
 meetingPoint: "Cascade Complex"
 
 pricing:
-  group: 25
-  private: 50
-  fullDay: 200
+  perPerson: 20 # Join a scheduled group walk
+  privateGroup: 100 # Private 3h walk (flat rate)
+  fullDay: 200 # Hire guide for the entire day
 
 languages:
   - English

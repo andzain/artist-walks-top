@@ -11,9 +11,9 @@ duration: "3 hours"
 meetingPoint: "Alexsander Tamanyan's Statue"
 
 pricing:
-  group: 25
-  private: 50
-  fullDay: 100
+  perPerson: 20 # Join a scheduled group walk
+  privateGroup: 100 # Private 3h walk (flat rate)
+  fullDay: 200 # Hire guide for the entire day
 
 languages:
   - English

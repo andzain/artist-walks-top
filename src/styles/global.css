@@ -17,3 +17,13 @@ img {
   background: #d6b37a;
   color: black;
 }
+.prose {
+  font-size: 1.0625rem; /* Slightly larger body text */
+  line-height: 1.75;
+}
+
+.prose h2,
+.prose h3 {
+  margin-top: 2.5em;
+  margin-bottom: 1em;
+}

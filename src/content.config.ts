@@ -16,9 +16,11 @@ const experiences = defineCollection({
     meetingPoint: z.string(),
 
     pricing: z.object({
-      group: z.number(),
-      private: z.number(),
-      fullDay: z.number(),
+      perPerson: z.number().optional(),
+      privateGroup: z.number().optional(),
+      fullDay: z.number().optional(),
+      group: z.number().optional(),
+      private: z.number().optional(),
     }),
 
     languages: z.array(z.string()),
@@ -26,7 +28,7 @@ const experiences = defineCollection({
 
     featured: z.boolean(),
 
-    calEvent: z.string(),
+    calEvent: z.string().optional(),
 
     hero: z.string(),
 
